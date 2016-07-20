@@ -10,3 +10,8 @@
 .files {
     padding-top: 1em;
 }
+#board tr td:nth-child(1) { width: 50%; } /* title */
+#board tr td:nth-child(2) { width: 20%; } /* user */
+#board tr td:nth-child(3) { width: 8%; } /* hit */
+#board tr td:nth-child(4) { width: 8%; } /* vote */
+#board tr td:nth-child(5) { width: 14%; } /* date */

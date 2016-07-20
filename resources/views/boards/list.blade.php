@@ -17,11 +17,13 @@
                 <div class="panel-heading">Boards</div>
 
                 <div class="panel-body">
-                    <table class="table table-hover">
+                    <table id="board" class="table table-hover">
                         <thead>
                         <tr>
                             <th>제목</th>
                             <th>작성자</th>
+                            <th>조회</th>
+                            <th>추천</th>
                             <th>날짜</th>
                         </tr>
                         </thead>
@@ -32,6 +34,8 @@
                                     <a href="{{ url('board/'.$board->id) }}">{{ str_limit($board->title, 50, '...') }}</a>
                                 </td>
                                 <td>{{ str_limit($board->user->name, 20, '...') }}</td>
+                                <td>{{ $board->hit }}</td>
+                                <td>{{ $board->vote }}</td>
                                 <td>{{ $board->created_at }}</td>
                             </tr>
                         @endforeach
