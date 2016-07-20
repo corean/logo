@@ -24,4 +24,9 @@ class Board extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function files()
+    {
+        return $this->hasMany(Fileentry::class);
+    }
 }

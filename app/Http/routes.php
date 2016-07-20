@@ -18,3 +18,6 @@ Route::get('/', function () {
 Route::auth();
 Route::get('/boards', 'boardController@index')->name('boards');
 Route::resource('/board', 'boardController');
+Route::get('/files', 'fileController@index')->name('files');
+Route::get('/file/download/{id}', 'fileController@download');
+Route::resource('/file', 'fileController');

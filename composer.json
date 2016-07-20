@@ -7,8 +7,9 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "barryvdh/laravel-ide-helper": "^2.2",
+        "laravelcollective/html": "5.2.*",
         "doctrine/dbal": "^2.5",
+        "barryvdh/laravel-ide-helper": "^2.2",
         "barryvdh/laravel-debugbar": "^2.2"
     },
     "require-dev": {

@@ -29,4 +29,9 @@ class User extends Authenticatable
         return $this->hasMany(Board::class);
     }
 
+    public function files()
+    {
+        return $this->hasMany(Fileentry::class);
+    }
+
 }

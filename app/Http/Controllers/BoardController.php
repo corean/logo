@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use DebugBar\DebugBar;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Board;
+
 
 class BoardController extends Controller
 {
@@ -18,7 +18,9 @@ class BoardController extends Controller
     {
         $this->request = $request;
         $this->middleware('auth');
-    }/**
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -26,8 +28,8 @@ class BoardController extends Controller
     public function index()
     {
         $boards = Board::orderBy('created_at','desc')->paginate(10);
+        \Debugbar::info('BoardController.index');
         $boards->load('user'); //지연로드
-//        DebugBar::info($boards);
         return view('boards.list', [
             'boards' => $boards
         ]);
@@ -45,7 +47,7 @@ class BoardController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage.php 
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -64,17 +66,20 @@ class BoardController extends Controller
             'body.min' => '본문은 최소 :min글자 이상 필요합니다.',
 
         ]);
-        if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $file ) {
-                \Storage::put($file->getClientOriginalName(), file_get_contents($file));
-            }
-            //$request->files =
-        }
+
         $board = new Board;
         $board->user_id = $request->user()->id;
         $board->title = $request->title;
         $board->body = $request->body;
         $result = $board->save();
+
+        // 업로드 파일처리
+        if ($request->hasFile('files')) {
+            $upload_success = app('App\Http\Controllers\FileController')->store($request, $board);
+            if (!$upload_success) {
+                return back()->with('flash_message', ' 업로드가 되지 않았습니다.')->withInput();
+            }
+        }
 
         if (!$result) {
             return back()->with('flash_message', ' 글이 저장되지 않았습니다.')->withInput();
@@ -91,9 +96,9 @@ class BoardController extends Controller
     public function show($id)
     {
         $board = Board::findOrFail($id);
-        return view('boards.show',['board'=>$board]);
-            //compact($board));
-//        return $board->toArray();
+        $files = $board->files()->get();
+//        \Debugbar::info($files);
+        return view('boards.show',['board'=>$board, 'files'=>$files]);
     }
 
     /**
@@ -105,8 +110,10 @@ class BoardController extends Controller
     public function edit($id)
     {
         $board = Board::findOrFail($id);
+        $files = $board->files()->get();
+
 //        dd($board);
-        return view('boards.edit',['board'=>$board]);
+        return view('boards.edit',['board'=>$board], ['files'=>$files]);
     }
 
     /**
@@ -127,20 +134,21 @@ class BoardController extends Controller
             'body.min' => '본문은 최소 :min글자 이상 필요합니다.',
 
         ]);
-        if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $file ) {
-                \Storage::put($file->getClientOriginalName(), file_get_contents($file));
-            }
-            //$request->files =
-        }
         $board = Board::findOrFail($id);
-//        $board->user_id = $request->user()->id;
         $board->title = $request->title;
         $board->body = $request->body;
         $result = $board->save();
 
+        // 업로드 파일처리
+        if ($request->hasFile('files')) {
+            $upload_success = app('App\Http\Controllers\FileController')->store($request, $board);
+            if (!$upload_success) {
+                return back()->with('flash_message', ' 업로드가 되지 않았습니다.')->withInput();
+            }
+        }
+
         if (!$result) {
-            return back()->with('flash_message', ' 글이 수되지 않았습니다.')->withInput();
+            return back()->with('flash_message', ' 글이 수정되지 않았습니다.')->withInput();
         }
         return redirect(route('boards'))->with('flash_message', ' 글이 수정되었습니다.');
     }
@@ -153,6 +161,7 @@ class BoardController extends Controller
      */
     public function destroy($id)
     {
+        /*  todo  글삭제시 파일이나 댓글도 같이 삭제 */
         $result = Board::destroy($id);
         if (!$result) {
             return back()->with('flash_message', ' 글이 삭제되지 않았습니다.')->withInput();
