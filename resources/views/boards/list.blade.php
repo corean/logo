@@ -31,12 +31,14 @@
                         @foreach($boards as $board)
                             <tr>
                                 <td>
-                                    <a href="{{ url('board/'.$board->id) }}">{{ str_limit($board->title, 50, '...') }}</a>
+                                    <a href="{{ url('board/'.$board->id) }}">{{ str_limit($board->title, 40, '...') }}</a>
                                 </td>
-                                <td>{{ str_limit($board->user->name, 20, '...') }}</td>
+                                <td>{{ str_limit($board->user->name, 15, '...') }}</td>
                                 <td>{{ $board->hit }}</td>
                                 <td>{{ $board->vote }}</td>
-                                <td>{{ $board->created_at }}</td>
+                                <td>
+                                    {{ $board->get_short_created_at() }}
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

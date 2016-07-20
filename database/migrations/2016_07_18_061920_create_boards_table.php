@@ -17,6 +17,8 @@ class CreateBoardsTable extends Migration
             $table->integer('user_id');
             $table->string('title');
             $table->text('body');
+            $table->integer('hit');
+            $table->integer('vote');
             $table->string('files');
             $table->timestamps();
         });

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Board;
-
+use Carbon\Carbon;
 
 class BoardController extends Controller
 {
@@ -97,7 +97,6 @@ class BoardController extends Controller
     {
         $board = Board::findOrFail($id);
         $files = $board->files()->get();
-//        \Debugbar::info($files);
         return view('boards.show',['board'=>$board, 'files'=>$files]);
     }
 
