@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Board;
-use Carbon\Carbon;
 
 class BoardController extends Controller
 {

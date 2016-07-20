@@ -36,9 +36,7 @@
                                 <td>{{ str_limit($board->user->name, 15, '...') }}</td>
                                 <td>{{ $board->hit }}</td>
                                 <td>{{ $board->vote }}</td>
-                                <td>
-                                    {{ $board->get_short_created_at() }}
-                                </td>
+                                <td>{{ $board->get_short_created_at() }}</td>
                             </tr>
                         @endforeach
                         </tbody>
