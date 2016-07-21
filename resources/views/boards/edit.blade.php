@@ -67,7 +67,7 @@
                         </div>
                     </form>
                     {{-- 파일 보기 --}}
-                    @if (!empty($files))
+                    @if (!$files)
                         <div class="form-group">
                             <div class="col-sm-2 text-right">이전 파일</div>
                             <div class="col-sm-9">
