@@ -50,11 +50,12 @@ class BoardController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
+     * todo 여러번 submit 금지
+     * todo 1분이내 같은 내용인지 확인
      */
     public function store(Request $request)
     {
-//      todo 여러번 submit 금지
-//      todo 1분이내 같은 내용인지 확인
 
         $this->validate($request, [
             'title' => 'required|max:255',
@@ -104,6 +105,8 @@ class BoardController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     *
+     * todo 게시물 수정권한
      */
     public function edit($id)
     {
@@ -156,10 +159,11 @@ class BoardController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     *
+     * todo  글삭제시 파일이나 댓글도 같이 삭제
      */
     public function destroy($id)
     {
-        /*  todo  글삭제시 파일이나 댓글도 같이 삭제 */
         $result = Board::destroy($id);
         if (!$result) {
             return back()->with('flash_message', ' 글이 삭제되지 않았습니다.')->withInput();

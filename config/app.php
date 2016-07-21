@@ -151,6 +151,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Mnabialek\LaravelSqlLogger\Providers\ServiceProvider::class, //SQL Logger
 
         /*
          * Application Service Providers...

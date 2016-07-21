@@ -10,7 +10,16 @@
         "laravelcollective/html": "5.2.*",
         "doctrine/dbal": "^2.5",
         "barryvdh/laravel-ide-helper": "^2.2",
-        "barryvdh/laravel-debugbar": "^2.2"
+        "barryvdh/laravel-debugbar": "^2.2",
+        "mnabialek/laravel-sql-logger": "^1.1",
+        "aws/aws-sdk-php": "^3.18",
+        "guzzlehttp/guzzle": "^6.2",
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "league/flysystem-rackspace": "^1.0",
+        "pda/pheanstalk": "^3.1",
+        "predis/predis": "^1.1",
+        "pusher/pusher-php-server": "^2.4",
+        "symfony/psr-http-message-bridge": "^0.2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
